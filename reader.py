@@ -1,11 +1,11 @@
 """
 reddit-ui-feedback-reader
 A personal, read-only script that reads top posts and comments from
-r/UI_Design and r/userexperience and saves them locally for UI design study.
+ten design and game-design subreddits and saves them locally for UI design study.
 
 - Application-only OAuth (read-only). Never posts, comments, votes, or messages.
 - GET requests only.
-- Paced at 1 request per second; hard cap of 250 requests per run.
+- Paced at 1 request per second; hard cap of 1,100 requests per run.
 - Data is saved locally only. Not republished, sold, or used to train AI models.
 
 Setup: set REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, and REDDIT_USERNAME
@@ -14,10 +14,13 @@ as environment variables, then run:  python3 reader.py
 import base64, json, os, sys, time, urllib.parse, urllib.request
 from datetime import date
 
-SUBREDDITS = ["UI_Design", "userexperience"]
+SUBREDDITS = [
+    "UI_Design", "userexperience", "UXDesign", "web_design", "design_critiques",
+    "truegaming", "gamedesign", "gamedev", "Unity3D", "IndieDev",
+]
 TIME_WINDOW = "month"      # hour, day, week, month, year, all
 POSTS_PER_SUB = 100        # Reddit's max per listing request
-MAX_REQUESTS = 250         # hard safety cap per run
+MAX_REQUESTS = 1100        # 10 subs x 100 threads + 10 listings = 1,010; hard cap per run
 PAUSE_SECONDS = 1.0        # at most 1 request per second
 
 CLIENT_ID = os.environ.get("REDDIT_CLIENT_ID")
